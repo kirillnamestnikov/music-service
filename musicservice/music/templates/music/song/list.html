@@ -1,0 +1,34 @@
+{% extends "music/base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if genre %}{{ genre.name }}{% else %}Music{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div id="sidebar">
+        <h3>Genres</h3>
+        <ul>
+            <li {% if not genre %}class="selected"{% endif %}>
+                <a href="{% url "music:song_list" %}">All</a>
+            </li>
+            {% for g in genres %}
+                <li {% if genre.slug == g.slug %}class="selected"{% endif %}>
+                    <a href="{{ g.get_absolute_url }}">{{ g.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="main" class="song-list">
+        <h1>{% if genre %}{{ genre.name }}{% else %}Music{% endif %}</h1>
+        {% for song in songs %}
+            <div class="item">
+                <a href="{{ song.get_absolute_url }}">
+                    <img src="{% if song.thumbnail %}{{ song.thumbnail.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                </a>
+                <a href="{{ song.get_absolute_url }}">{{ song.name }}</a>
+                <br>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

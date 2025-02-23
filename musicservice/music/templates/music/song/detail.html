@@ -1,0 +1,18 @@
+{% extends "music/base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ song.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="song-detail">
+        <img src="{% if song.thumbnail %}{{ song.thumbnail.url }}{% else %}{% static "img/no_img.png" %}{% endif %}">
+        <h1>{{ song.name }}</h1>
+        <h2>
+            <a href="{{ song.genre.get_absolute_url }}">
+                {{ song.genre }}
+            </a>
+        </h2>
+    </div>
+{% endblock %}
